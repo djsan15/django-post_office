@@ -8,6 +8,7 @@ from django.core.mail import get_connection
 from django.db import connection as db_connection
 from django.db.models import Q
 from django.template import Context, Template
+from django.core.urlresolvers import reverse
 
 from .models import Email, EmailTemplate, PRIORITY, STATUS
 from .settings import get_batch_size, get_email_backend, get_log_level
