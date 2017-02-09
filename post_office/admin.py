@@ -37,7 +37,7 @@ requeue.short_description = 'Requeue selected emails'
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ('id', 'to_display', 'subject', 'template',
+    list_display = ('id', 'to_display', 'subject','log_message',
                     'status', 'last_updated')
     inlines = [LogInline]
     list_filter = ['status']
@@ -45,6 +45,12 @@ class EmailAdmin(admin.ModelAdmin):
         CommaSeparatedEmailField: {'widget': CommaSeparatedEmailWidget}
     }
     actions = [requeue]
+
+    def log_message(self,obj):
+        try:
+            return obj.logs.first().message[:50]
+        except:
+            return ''
 
     def get_queryset(self, request):
         return super(EmailAdmin, self).get_queryset(request).select_related('template')
