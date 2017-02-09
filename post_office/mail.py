@@ -87,9 +87,12 @@ def create(sender, recipients=None, cc=None, bcc=None, subject='', message='',
 
     if commit:
         email.save() # to generate pk
-        if '<!-- Generic Email Tracker -->' in html_message:
-            email.html_message = email.html_message.replace('<!-- Generic Email Tracker -->','<img src="https://www.glitstreet.com'+reverse('shop:generic-email-tracker',args=['none',email.pk])+'">')
-            email.save()
+        tracker_comments = ['<!-- Generic Email Tracker -->','&lt;!-- Generic Email Tracker --&gt;']
+        for t_comment in tracker_comments:
+            if t_comment in html_message:
+                email.html_message = email.html_message.replace(t_comment,'<img src="https://www.glitstreet.com'+reverse('shop:generic-email-tracker',args=['none',email.pk])+'">')
+                email.save()
+                break
     return email
 
 
