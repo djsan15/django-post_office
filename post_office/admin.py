@@ -45,6 +45,7 @@ class EmailAdmin(admin.ModelAdmin):
         CommaSeparatedEmailField: {'widget': CommaSeparatedEmailWidget}
     }
     actions = [requeue]
+    search_fields = ['to','cc','bcc','subject','message','html_message']
 
     def log_message(self,obj):
         try:
